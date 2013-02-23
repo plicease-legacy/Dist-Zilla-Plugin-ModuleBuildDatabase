@@ -14,7 +14,7 @@ extends 'Dist::Zilla::Plugin::ModuleBuild';
  mbd_database_type = PostgreSQL
  mbd_database_options.name = my_database_name
  mbd_database_options.schema = my_schema_name
- database_extensions.postgis.schema = public
+ mbd_database_extensions.postgis.schema = public
 
 =head1 DESCRIPTION
 
@@ -48,8 +48,8 @@ Database extensions.  This is a hash reference.  This must be specified using th
 =head1 SEE ALSO
 
 L<Dist::Zilla::Plugin::ModuleBuild>,
-L<Module::Build::Database>
-L<Module::Build::Database::PostgreSQL>
+L<Module::Build::Database>,
+L<Module::Build::Database::PostgreSQL>,
 L<Module::Build::Database::SQLite>
 
 =cut
