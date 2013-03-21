@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.03      2013-03-21 11:10:26 America/New_York
   - fix META.json,yml
 
 0.02      2013-02-22 21:03:56 America/New_York
