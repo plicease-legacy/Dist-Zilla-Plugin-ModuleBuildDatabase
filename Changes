@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - MSWin32 compatability
 
 0.03_01   2013-06-11 13:24:23 America/New_York
   - added dzil mbd_build command
