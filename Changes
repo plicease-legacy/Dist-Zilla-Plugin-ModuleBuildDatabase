@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - added dzil mbd_build command
 
 0.03      2013-03-21 11:10:26 America/New_York
   - fix META.json,yml
