@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.05      2013-07-06 13:07:57 America/New_York
   - update metadata
 
 0.04      2013-06-21 21:52:22 America/New_York
