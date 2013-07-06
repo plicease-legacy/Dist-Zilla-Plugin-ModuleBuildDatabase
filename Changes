@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  - update metadata
 
 0.04      2013-06-21 21:52:22 America/New_York
   - Promote to production
