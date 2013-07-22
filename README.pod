@@ -4,7 +4,7 @@ Dist::Zilla::Plugin::ModuleBuildDatabase - build a Build.PL that uses Module::Bu
 
 =head1 VERSION
 
-version 0.05_02
+version 0.05_03
 
 =head1 SYNOPSIS
 

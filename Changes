@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.05_03   2013-07-22 13:53:49 America/New_York
   - sqlite name is now relative to dist root (instead of build root)
   - sqlite name can use ~ or ~user for home directories
 
