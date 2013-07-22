@@ -4,6 +4,7 @@ use Moose;
 use v5.10;
 use File::chdir;
 use Path::Class::Dir;
+use Path::Class::File;
 use File::Copy qw( copy );
 
 extends 'Dist::Zilla::Plugin::ModuleBuild';
@@ -42,11 +43,17 @@ and L<Module::Build::Database::SQLite> documentation.
 
 =head2 mbd_database_options
 
-Database options.  This is a hash reference.  This must be specified using the dot notation as in the example above.
+Database options.  This is a hash reference.  This must be specified using the dot notation as in the 
+example above.
+
+If you are using SQLite as your database type, then C<name> will be adjusted if it is a relative path to 
+be in the C<$dzil-E<gt>root> root instead of the build root.  You may also use ~ in for the database 
+name to specify a home directory.
 
 =head2 mbd_database_extensions
 
-Database extensions.  This is a hash reference.  This must be specified using the dot notation as in the example above.
+Database extensions.  This is a hash reference.  This must be specified using the dot notation as in the 
+example above.
 
 =head1 SEE ALSO
 
@@ -83,6 +90,33 @@ around module_build_args => sub {
   
   my %args = %{ $self->$orig(@_) };
   
+  if($self->mbd_database_type eq 'SQLite')
+  {
+    my $name = $self->mbd_extra_options->{database_options}->{name};
+
+    if(Path::Class::File->new($name)->is_relative)
+    {
+      my @list = Path::Class::File->new($name)->components;
+      if($list[0] eq '~')
+      {
+        $list[0] = File::HomeDir->my_home;
+        $name = Path::Class::File->new(@list)->stringify;
+      }
+      elsif($list[0] =~ /^~(.*)$/)
+      {
+        $list[0] = File::HomeDir->users_home($1);
+        $name = Path::Class::File->new(@list)->stringify;
+      }
+      else
+      {
+        $name = $self->zilla->root->file($name)->stringify;
+      }
+    }
+    
+    $self->mbd_extra_options->{database_options}->{name} = $name
+      if defined $name;
+  }
+
   $args{database_type}    = $self->mbd_database_type;
   
   while(my($k,$v) = each %{ $self->mbd_extra_options })
@@ -118,7 +152,7 @@ around BUILDARGS => sub {
 sub mbd_build
 {
   my($self, $opt, $args) = @_;
-  
+
   my $build_root = $opt->in 
   ? Path::Class::Dir->new($opt->in) 
   : $self->zilla->root->subdir('.build', 'mbd');
