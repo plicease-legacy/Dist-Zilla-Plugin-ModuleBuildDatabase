@@ -37,11 +37,17 @@ and L<Module::Build::Database::SQLite> documentation.
 
 =head2 mbd_database_options
 
-Database options.  This is a hash reference.  This must be specified using the dot notation as in the example above.
+Database options.  This is a hash reference.  This must be specified using the dot notation as in the 
+example above.
+
+If you are using SQLite as your database type, then C<name> will be adjusted if it is a relative path to 
+be in the C<$dzil-E<gt>root> root instead of the build root.  You may also use ~ in for the database 
+name to specify a home directory.
 
 =head2 mbd_database_extensions
 
-Database extensions.  This is a hash reference.  This must be specified using the dot notation as in the example above.
+Database extensions.  This is a hash reference.  This must be specified using the dot notation as in the 
+example above.
 
 =head1 SEE ALSO
 
