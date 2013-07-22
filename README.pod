@@ -1,12 +1,10 @@
-=pod
-
 =head1 NAME
 
 Dist::Zilla::Plugin::ModuleBuildDatabase - build a Build.PL that uses Module::Build::Database
 
 =head1 VERSION
 
-version 0.04
+version 0.05_01
 
 =head1 SYNOPSIS
 
