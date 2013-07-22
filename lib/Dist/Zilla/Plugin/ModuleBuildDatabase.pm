@@ -84,12 +84,10 @@ has '_notified' => (
   default => 0,
 );
 
-around module_build_args => sub {
-  my $orig = shift;
-  my $self = shift;
-  
-  my %args = %{ $self->$orig(@_) };
-  
+sub _fix_sqlite_name
+{
+  my($self) = @_;
+
   if($self->mbd_database_type eq 'SQLite')
   {
     my $name = $self->mbd_extra_options->{database_options}->{name};
@@ -109,14 +107,24 @@ around module_build_args => sub {
       }
       else
       {
-        $name = $self->zilla->root->file($name)->stringify;
+        $name = $self->zilla->root->file($name)->absolute->stringify;
       }
     }
     
     $self->mbd_extra_options->{database_options}->{name} = $name
       if defined $name;
   }
+  return;
+}
 
+around module_build_args => sub {
+  my $orig = shift;
+  my $self = shift;
+  
+  my %args = %{ $self->$orig(@_) };
+
+  $self->_fix_sqlite_name;
+  
   $args{database_type}    = $self->mbd_database_type;
   
   while(my($k,$v) = each %{ $self->mbd_extra_options })
@@ -152,6 +160,8 @@ around BUILDARGS => sub {
 sub mbd_build
 {
   my($self, $opt, $args) = @_;
+
+  $self->_fix_sqlite_name;
 
   my $build_root = $opt->in 
   ? Path::Class::Dir->new($opt->in) 
